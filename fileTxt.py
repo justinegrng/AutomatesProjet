@@ -31,6 +31,7 @@ def getAlphabet(automate):
 
 
 def displayAutomate(automate):
+    """FAIRE ATTENTION A LA SORTIE ET ENTREE AU MEME ENDROIT, PAS AFFICHER"""
     alphabet = getAlphabet(automate)
 
     # Trier les états : d'abord initiaux, puis les autres

@@ -18,7 +18,8 @@ def isDeterministic(automate):
                 nonDeterministicReasons.append(f"État {state} n'a pas de transition pour le symbole '{symbol}'.")
 
             if nonDeterministicReasons:
-                return False, nonDeterministicReasons
+                print(nonDeterministicReasons)
+                return False
             return True
 
 
@@ -39,7 +40,8 @@ def isStandard(automate):
                 f"Il existe une transition menant à l'état initial {initialState} à partir de l'état {startState} pour le symbole '{symbol}'.")
 
     if nonStandardReasons:
-        return False, nonStandardReasons
+        print(nonStandardReasons)
+        return False
     return True
 
 
@@ -55,11 +57,11 @@ def isComplete(automate):
             for transition in automate["transitions"]:
                 if transition[0] == state and transition[1] == symbol:
                     transitionExists = True
-                    break  # Si on trouve une transition, on sort de la boucle
 
             # Si aucune transition n'est trouvée pour cet état et symbole, l'automate n'est pas complet
             if not transitionExists:
-                return False, [f"L'état {state} n'a pas de transition pour le symbole '{symbol}'."]
+                print(f"L'état {state} n'a pas de transition pour le symbole '{symbol}'.")
+                return False
 
     # Si toutes les vérifications passent, l'automate est complet
     return True

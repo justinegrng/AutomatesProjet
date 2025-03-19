@@ -27,12 +27,16 @@ def main():
     alphabet = getAlphabet(automate)
 
     displayAutomate(automate)
-    print(isDeterministic(automate))
-    print(isStandard(automate))
-    print(isComplete(automate))
+    print("Déterministe ? : ", isDeterministic(automate))
+    print("Standard ? ", isStandard(automate))
+    print("Complet ?", isComplete(automate))
 
     automateStand = standardizeAutomate(automate)
+    print("Automate standardisé: ")
     displayAutomate(automateStand)
 
+    print("Automate complet")
+    automateComplet = completeAutomate(automate)
+    displayAutomate(automateComplet)
 if __name__ == "__main__":
     main()
