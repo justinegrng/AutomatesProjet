@@ -1,5 +1,6 @@
 from fileTxt import *
 from detection import*
+from automate import *
 import os
 def chooseAutomat():
     files = [f for f in os.listdir() if f.startswith("automate") and f.endswith(".txt")]
@@ -29,6 +30,9 @@ def main():
     print(isDeterministic(automate))
     print(isStandard(automate))
     print(isComplete(automate))
+
+    automateStand = standardizeAutomate(automate)
+    displayAutomate(automateStand)
 
 if __name__ == "__main__":
     main()
