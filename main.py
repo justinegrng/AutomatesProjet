@@ -18,8 +18,8 @@ def main():
     # automatonFile = chooseAutomat()
 
     # Exemple d'utilisation
-    filename = ("automate5.txt")
-    automate = readAutomatonFromFile(filename)
+    filename = ("automate22.txt")
+    automate = readAutomateFromFile(filename)
 
     # Obtenir l'alphabet de l'automate
     alphabet = getAlphabet(automate)
