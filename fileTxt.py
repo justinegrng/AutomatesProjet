@@ -1,4 +1,4 @@
-
+# Fonction de lecture du fichier d'automate
 def readAutomatonFromFile(filename):
     with open(filename, "r") as file:
         lines = [line.strip() for line in file.readlines() if line.strip()]
@@ -22,11 +22,38 @@ def readAutomatonFromFile(filename):
     }
     return automate
 
+
+# Fonction pour obtenir l'alphabet de l'automate
 def getAlphabet(automaton):
     alphabet = set()  # Utilisation d'un ensemble pour éviter les doublons
-
     for transitions in automaton["transitions"]:
-        for symbol in transitions:
-            alphabet.add(symbol)
+        alphabet.add(transitions[1])  # On ne garde que le symbole (la lettre)
+    return list(alphabet)
 
-    return alphabet
+
+# Fonction pour afficher l'automate sous forme de tableau
+def displayAutomate(automaton):
+    # Récupération des états et de l'alphabet
+    states = list(range(automaton["numStates"]))
+    alphabet = getAlphabet(automaton)
+
+    # Affichage de l'en-tête du tableau
+    print("+-----+---------+" + "".join([f" {a}   |" for a in alphabet]))
+    print("+=====+=========+" + "======" * len(alphabet))
+
+    # Affichage des transitions pour chaque état
+    for state in states:
+        stateType = "I" if state in automaton["initialStates"] else "O" if state in automaton["finalStates"] else " "
+        print(f"| {stateType}   |       {state} |", end="")
+
+        for symbol in alphabet:
+            # On cherche la transition pour cet état et ce symbole
+            transition_found = False
+            for transition in automaton["transitions"]:
+                if transition[0] == state and transition[1] == symbol:
+                    print(f" {transition[2]}   |", end="")
+                    transition_found = True
+                    break
+            if not transition_found:
+                print(" -   |", end="")
+        print("\n+-----+---------+" + "-----" * len(alphabet))
