@@ -1,4 +1,5 @@
 from fileTxt import *
+from detection import*
 import os
 def chooseAutomat():
     files = [f for f in os.listdir() if f.startswith("automate") and f.endswith(".txt")]
@@ -18,13 +19,15 @@ def main():
     # automatonFile = chooseAutomat()
 
     # Exemple d'utilisation
-    filename = ("automate22.txt")
+    filename = ("automate8.txt")
     automate = readAutomateFromFile(filename)
 
     # Obtenir l'alphabet de l'automate
     alphabet = getAlphabet(automate)
 
     displayAutomate(automate)
+    print(isDeterministic(automate))
+    print(isStandard(automate))
 
 if __name__ == "__main__":
     main()

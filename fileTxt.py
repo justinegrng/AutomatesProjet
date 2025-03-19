@@ -23,9 +23,9 @@ def readAutomateFromFile(filename):
     return automate
 
 
-def getAlphabet(automaton):
+def getAlphabet(automate):
     alphabet = set()
-    for transition in automaton["transitions"]:
+    for transition in automate["transitions"]:
         alphabet.add(transition[1])
     return sorted(list(alphabet))  # Trie les symboles
 
