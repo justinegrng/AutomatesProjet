@@ -41,3 +41,25 @@ def isStandard(automate):
     if nonStandardReasons:
         return False, nonStandardReasons
     return True
+
+
+def isComplete(automate):
+    # Récupérer l'alphabet de l'automate
+    alphabet = getAlphabet(automate)
+
+    # Vérifier pour chaque état et chaque symbole si une transition existe
+    for state in range(automate["numStates"]):
+        for symbol in alphabet:
+            # Trouver toutes les transitions possibles pour l'état et le symbole
+            transitionExists = False
+            for transition in automate["transitions"]:
+                if transition[0] == state and transition[1] == symbol:
+                    transitionExists = True
+                    break  # Si on trouve une transition, on sort de la boucle
+
+            # Si aucune transition n'est trouvée pour cet état et symbole, l'automate n'est pas complet
+            if not transitionExists:
+                return False, [f"L'état {state} n'a pas de transition pour le symbole '{symbol}'."]
+
+    # Si toutes les vérifications passent, l'automate est complet
+    return True

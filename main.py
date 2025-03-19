@@ -19,7 +19,7 @@ def main():
     # automatonFile = chooseAutomat()
 
     # Exemple d'utilisation
-    filename = ("automate8.txt")
+    filename = ("automate5.txt")
     automate = readAutomateFromFile(filename)
 
     # Obtenir l'alphabet de l'automate
@@ -28,6 +28,7 @@ def main():
     displayAutomate(automate)
     print(isDeterministic(automate))
     print(isStandard(automate))
+    print(isComplete(automate))
 
 if __name__ == "__main__":
     main()
