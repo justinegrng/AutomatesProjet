@@ -39,5 +39,9 @@ def main():
     print("Automate complet")
     automateComplet = completeAutomate(automate)
     displayAutomate(automateComplet)
+
+    print("Automate Déterminisé")
+    displayAutomate(Determinisation(automate))
+
 if __name__ == "__main__":
     main()

@@ -74,3 +74,7 @@ def completeAutomate(automate):
 
     return automate
 
+def Determinisation (automate):
+    alphabet = getAlphabet(automate)
+    initialStates = automate["initialStates"]
+
