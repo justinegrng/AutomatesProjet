@@ -7,7 +7,8 @@
 
 Dans notre projet, nous sommes capables de faire : 
 * Lecture d’un automate dans un fichier .txt
-* Affichage de l’automate, Standardisation si demandé
+* Affichage de l’automate
+* Standardisation si demandé
 * Déterminisation et complétion
 * Minimisation
 * Reconnaissance de mots
