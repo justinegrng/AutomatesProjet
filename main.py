@@ -18,30 +18,56 @@ def chooseAutomat():
 
 def main():
     # automatonFile = chooseAutomat()
-
     # Exemple d'utilisation
     directory = "automates"
     filename = os.path.join(directory, "automate5.txt")
     automate = readAutomateFromFile(filename)
-
     # Obtenir l'alphabet de l'automate
     alphabet = getAlphabet(automate)
+    while True:
+        printMenu()
+        menuChoice(automate)
+        choice = input("Voulez-vous continuer ? ")
+        if choice.lower() == "oui":
+            printMenu()
+            menuChoice(automate)
+        else:
+            print("Au revoir")
+            exit(0)
 
-    displayAutomate(automate)
-    print("Déterministe ? : ", isDeterministic(automate))
-    print("Standard ? ", isStandard(automate))
-    print("Complet ?", isComplete(automate))
 
-    automateStand = standardizeAutomate(automate)
-    print("Automate standardisé: ")
-    displayAutomate(automateStand)
+def printMenu():
+    print ("1. Afficher l'automate")
+    print("2. Est ce que l'automate est déterministe ?")
+    print("3. Est ce que l'automate est standard ?")
+    print("4. Est ce que l'automate est complet ?")
+    print("5. Standardiser l'automate")
+    print("6. Compléter l'automate")
+    print("7. Déterminiser l'automate")
 
-    print("Automate complet")
-    automateComplet = completeAutomate(automate)
-    displayAutomate(automateComplet)
-
-    print("Automate Déterminisé")
-    displayAutomate(Determinisation(automate))
+def menuChoice(automate):
+    choice = input("Choisissez une option: ")
+    if choice == "1":
+        displayAutomate(automate)
+    elif choice == "2":
+        print("Déterministe ? : ", isDeterministic(automate))
+    elif choice == "3":
+        print("Standard ? ", isStandard(automate))
+    elif choice == "4":
+        print("Complet ?", isComplete(automate))
+    elif choice == "5":
+        automateStand = standardizeAutomate(automate)
+        print("Automate standardisé: ")
+        displayAutomate(automateStand)
+    elif choice == "6":
+        print("Automate complet")
+        automateComplet = completeAutomate(automate)
+        displayAutomate(automateComplet)
+    elif choice == "7":
+        print("Automate Déterminisé")
+        displayAutomate(Determinisation(automate))
+    else :
+        print("Choix invalide")
 
 if __name__ == "__main__":
     main()

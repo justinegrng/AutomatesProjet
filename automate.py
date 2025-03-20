@@ -77,4 +77,30 @@ def completeAutomate(automate):
 def Determinisation (automate):
     alphabet = getAlphabet(automate)
     initialStates = automate["initialStates"]
-
+    queue = [frozenset(initialStates)]
+    newinitialStates = queue[0]
+    newStates = [newinitialStates]
+    newFinalStates = []
+    newTransitions = []
+    while queue:
+        currentStates = queue.pop(0)
+        for symbol in alphabet:
+            nextStates = set()
+            for state in currentStates:
+                for transition in automate["transitions"]:
+                    if transition[0] == state and transition[1] == symbol:
+                        nextStates.add(transition[2])
+            if nextStates:
+                newTransitions.append((currentStates, symbol, frozenset(nextStates)))
+                if frozenset(nextStates) not in newStates:
+                    queue.append(frozenset(nextStates))
+                    newStates.append(frozenset(nextStates))
+        if currentStates.intersection(automate["finalStates"]):
+            newFinalStates.append(currentStates)
+    return {
+        "alphabetSize": automate["alphabetSize"],
+        "numStates": len(newStates),
+        "initialStates": [newinitialStates],
+        "finalStates": newFinalStates,
+        "transitions": newTransitions
+    }
