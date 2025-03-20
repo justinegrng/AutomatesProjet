@@ -31,7 +31,6 @@ def getAlphabet(automate):
 
 
 def displayAutomate(automate):
-    """FAIRE ATTENTION A LA SORTIE ET ENTREE AU MEME ENDROIT, PAS AFFICHER"""
     alphabet = getAlphabet(automate)
 
     # Trier les états : d'abord initiaux, puis les autres
@@ -57,10 +56,11 @@ def displayAutomate(automate):
         # Définir le type d'état (I = initial, O = final, rien sinon)
         if state in automate["initialStates"]:
             stateType = "I "
-        elif state in automate["finalStates"]:
-            stateType = "O "
+        if state in automate["finalStates"]:
+            stateType += "O"
         else:
-            stateType = "  "
+            stateType = " "
+
 
         row = "| " + stateType.ljust(3) + "| " + str(state).rjust(stateColWidth - 2) + " |" # Assure alignement correct
 

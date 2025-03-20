@@ -21,16 +21,16 @@ def main():
 
     # Exemple d'utilisation
     directory = "automates"
-    filename = os.path.join(directory, "automate5.txt")
+    filename = os.path.join(directory, "automate12.txt")
     automate = readAutomateFromFile(filename)
 
     # Obtenir l'alphabet de l'automate
     alphabet = getAlphabet(automate)
 
     displayAutomate(automate)
-    print("Déterministe ? : ", isDeterministic(automate))
+    print("Déterministe ? ", isDeterministic(automate))
     print("Standard ? ", isStandard(automate))
-    print("Complet ?", isComplete(automate))
+    print("Complet ? ", isComplete(automate))
 
     automateStand = standardizeAutomate(automate)
     print("Automate standardisé: ")
@@ -41,7 +41,7 @@ def main():
     displayAutomate(automateComplet)
 
     print("Automate Déterminisé")
-    displayAutomate(Determinisation(automate))
+    #displayAutomate(Determinisation(automate))
 
 if __name__ == "__main__":
     main()
