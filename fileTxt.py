@@ -1,6 +1,6 @@
 # Fonction pour afficher l'automate sous forme de tableau
 def readAutomateFromFile(filename):
-    with open(filename, "r") as file:
+    with open(filename, 'r') as file:
         lines = [line.strip() for line in file.readlines() if line.strip()]
 
     alphabetSize = int(lines[0])

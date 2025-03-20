@@ -3,8 +3,8 @@ from detection import*
 from automate import *
 import os
 def chooseAutomat():
-    files = [f for f in os.listdir() if f.startswith("automate") and f.endswith(".txt")]
-
+    directory = "automates"
+    files = [f for f in os.listdir(directory) if f.endswith(".txt")]
     if not files:
         print("Pas de fichier trouvé.")
         return None
@@ -12,7 +12,7 @@ def chooseAutomat():
     while True:
         choice = input("Quel automate vous intéresse ? (number): ")
         if choice.isdigit() and 1 <= int(choice) <= len(files):
-            return files[int(choice) - 1]
+            return os.path.join(directory, files[int(choice) - 1])
         print("Choix invalide.")
 
 
@@ -20,7 +20,8 @@ def main():
     # automatonFile = chooseAutomat()
 
     # Exemple d'utilisation
-    filename = ("automate5.txt")
+    directory = "automates"
+    filename = os.path.join(directory, "automate5.txt")
     automate = readAutomateFromFile(filename)
 
     # Obtenir l'alphabet de l'automate
