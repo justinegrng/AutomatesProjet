@@ -1,7 +1,6 @@
 from fileTxt import *
 from detection import *
 
-
 def standardizeAutomate(automate):
     """ETAT INITIAL NOTER I"""
     if isStandard(automate):
@@ -74,7 +73,51 @@ def completeAutomate(automate):
 
     return automate
 
+
+
 def Determinisation (automate):
-    alphabet = getAlphabet(automate)
+    #Permet de déterminisé l'automate
+   
     initialStates = automate["initialStates"]
+
+    new_states = {}
+    new_transitions = []
+    queue = [frozenset(automate["initialStates"])]
+    new_initial_state = queue[0]
+    new_final_states = set()
+
+    alphabet = getAlphabet(automate)
+    print(f"États initiaux : {queue}")
+
+    while queue:
+        current_set = queue.pop(0)
+        if current_set not in new_states:
+            new_states[current_set] = len(new_states)
+        current_state_id = new_states[current_set]
+
+        print(f"\n Traitement de l'ensemble d'états {current_set}")
+
+        for symbol in alphabet:
+            next_set = frozenset(
+                state_to for state_from, sym, state_to in automate["transitions"] if
+                state_from in current_set and sym == symbol)
+            print(f"- Transition avec '{symbol}' mène à {next_set}")
+            if next_set:
+                if next_set not in new_states:
+                    new_states[next_set] = len(new_states)
+                    queue.append(next_set)
+                    print(f"Ajout d'un nouvel état : {next_set}")
+                new_transitions.append((current_state_id, symbol, new_states[next_set]))
+                if next_set & set(automate["finalStates"]):
+                    new_final_states.add(new_states[next_set])
+                    print(f"L'état {new_states[next_set]} est final")
+
+    afd = {
+        "numStates": len(new_states),
+        "initialStates": {new_states[new_initial_state]},
+        "finalStates": new_final_states,
+        "transitions": new_transitions}
+
+    print("\n Automate déterminisé")
+    return afd
 

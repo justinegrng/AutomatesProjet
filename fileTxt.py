@@ -1,4 +1,5 @@
 # Fonction pour afficher l'automate sous forme de tableau
+
 def readAutomateFromFile(filename):
     with open(filename, 'r') as file:
         lines = [line.strip() for line in file.readlines() if line.strip()]
@@ -80,3 +81,4 @@ def displayAutomate(automate):
 
         print(row)
         print("+----+---------+" + "-------+" * len(alphabet))
+

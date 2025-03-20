@@ -41,7 +41,15 @@ def main():
     displayAutomate(automateComplet)
 
     print("Automate Déterminisé")
-    displayAutomate(Determinisation(automate))
+    afd = Determinisation(automate)
+    displayAutomate(afd)
+
+    print("Automate Minimisé")
+    """displayAutomate(afdm)"""
 
 if __name__ == "__main__":
     main()
+
+
+
+
