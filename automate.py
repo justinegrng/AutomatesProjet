@@ -134,7 +134,5 @@ def Determinisation (automate):
     return afd
 
 
-"""next_set = tuple(sorted(
-                state_to for state_from, sym, state_to in automate["transitions"] if
-                state_from in current_set and sym == symbol))"""
+
 
