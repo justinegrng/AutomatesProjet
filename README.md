@@ -26,6 +26,7 @@ Dans notre projet, nous sommes capables de faire :
 - `main.py`
 - `fileTxt.py`
 - `detection.py`
+- `automate.py`
 
 <details>
 <summary> 📁 automates </summary>
