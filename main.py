@@ -21,7 +21,7 @@ def main():
 
     # Exemple d'utilisation
     directory = "automates"
-    filename = os.path.join(directory, "automate18.txt")
+    filename = os.path.join(directory, "automate5.txt")
     automate = readAutomateFromFile(filename)
 
     # Obtenir l'alphabet de l'automate

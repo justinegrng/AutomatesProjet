@@ -1,6 +1,7 @@
 from fileTxt import*
 def isDeterministic(automate):
     nonDeterministicReasons = []
+    numInitialStates = len(automate["initialStates"])
 
     # Vérifier si l'automate est déterministe
     for state in range(automate["numStates"]):
@@ -11,11 +12,14 @@ def isDeterministic(automate):
                 if transition[0] == state and transition[1] == symbol:
                     nextStates.add(transition[2])
             # Si plus d'une transition existe, ce n'est pas déterministe
-            if len(nextStates) > 1:
+            if numInitialStates !=1 :
+                nonDeterministicReasons.append(f"L'automate a {numInitialStates} états d'entrées")
+            elif len(nextStates) > 1:
                 nonDeterministicReasons.append(
                     f"État {state} a des transitions multiples pour le symbole '{symbol}' : {nextStates}")
             elif len(nextStates) == 0:
                 nonDeterministicReasons.append(f"État {state} n'a pas de transition pour le symbole '{symbol}'.")
+
 
             if nonDeterministicReasons:
                 print(nonDeterministicReasons)
@@ -87,7 +91,6 @@ def recognizeWord(automate, word):
             return False
 
         currentStates = nextStates
-        print(nextStates)
 
     # Vérifier si au moins un état courant est un état final
     for state in currentStates:

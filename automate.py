@@ -6,7 +6,7 @@ def standardizeAutomate(automate):
     """ETAT INITIAL NOTER I"""
     if isStandard(automate):
         print("L'automate est déjà standard")
-        return
+        return automate
     # Créer un nouvel état i (ajouté comme état initial)
     newInitialState = max(automate["numStates"], max(automate["finalStates"], default=-1) + 1)
 
