@@ -44,6 +44,7 @@ def printMenu():
     print("5. Standardiser l'automate")
     print("6. Compléter l'automate")
     print("7. Déterminiser l'automate")
+    print("8. Reconnaître un mot")
 
 def menuChoice(automate):
     choice = input("Choisissez une option: ")
@@ -66,6 +67,10 @@ def menuChoice(automate):
     elif choice == "7":
         print("Automate Déterminisé")
         displayAutomate(Determinisation(automate))
+    elif choice == "8":
+        print("Le mot est reconnu ?")
+        mot = input("Entrez un mot: ")
+        print(recognizeWord(automate, mot))
     else :
         print("Choix invalide")
 
