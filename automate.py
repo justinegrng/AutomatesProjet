@@ -78,3 +78,5 @@ def Determinisation (automate):
     alphabet = getAlphabet(automate)
     initialStates = automate["initialStates"]
 
+def minimisationAutomate(automate):
+    AFCD = Determinisation(automate)

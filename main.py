@@ -21,7 +21,7 @@ def main():
 
     # Exemple d'utilisation
     directory = "automates"
-    filename = os.path.join(directory, "automate12.txt")
+    filename = os.path.join(directory, "automate18.txt")
     automate = readAutomateFromFile(filename)
 
     # Obtenir l'alphabet de l'automate
@@ -42,6 +42,13 @@ def main():
 
     print("Automate Déterminisé")
     #displayAutomate(Determinisation(automate))
+
+    print(recognizeWord(automate, "b"))
+    print(recognizeWord(automate, "aaaacbd"))
+    print(recognizeWord(automate, "acbdac"))
+    print(recognizeWord(automate, "acaa"))
+
+
 
 if __name__ == "__main__":
     main()

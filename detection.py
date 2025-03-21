@@ -65,3 +65,33 @@ def isComplete(automate):
 
     # Si toutes les vérifications passent, l'automate est complet
     return True
+
+def recognizeWord(automate, word):
+    """Vérifie si un mot est reconnu par l'automate (déterministe ou non-déterministe)"""
+
+    # Liste des états accessibles depuis les états initiaux
+    currentStates = automate["initialStates"][:]
+
+    # Lire chaque symbole du mot
+    for symbol in word:
+        nextStates = []
+
+        for state in currentStates:
+            for transition in automate["transitions"]:
+                if transition[0] == state and transition[1] == symbol:
+                    if transition[2] not in nextStates:
+                        nextStates.append(transition[2])  # Ajouter les nouveaux états accessibles
+
+        # Mettre à jour les états courants
+        if not nextStates:  # Si aucun état atteint, le mot est rejeté
+            return False
+
+        currentStates = nextStates
+        print(nextStates)
+
+    # Vérifier si au moins un état courant est un état final
+    for state in currentStates:
+        if state in automate["finalStates"]:
+            return True
+
+    return False
