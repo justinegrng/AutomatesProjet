@@ -77,12 +77,12 @@ def completeAutomate(automate):
 
 def Determinisation (automate):
     #Permet de déterminisé l'automate
-   
+
     initialStates = automate["initialStates"]
 
     new_states = {}
     new_transitions = []
-    queue = [frozenset(automate["initialStates"])]
+    queue = [tuple(sorted(automate["initialStates"]))]
     new_initial_state = queue[0]
     new_final_states = set()
 
@@ -98,9 +98,16 @@ def Determinisation (automate):
         print(f"\n Traitement de l'ensemble d'états {current_set}")
 
         for symbol in alphabet:
-            next_set = frozenset(
-                state_to for state_from, sym, state_to in automate["transitions"] if
-                state_from in current_set and sym == symbol)
+            next_set = tuple(sorted([
+                int(state_to) if isinstance(state_to, str) and state_to.isdigit() else state_to
+                for state_from, sym, state_to in automate["transitions"]
+                if state_from in current_set and sym == symbol
+            ]))
+
+
+
+
+
             print(f"- Transition avec '{symbol}' mène à {next_set}")
             if next_set:
                 if next_set not in new_states:
@@ -108,9 +115,14 @@ def Determinisation (automate):
                     queue.append(next_set)
                     print(f"Ajout d'un nouvel état : {next_set}")
                 new_transitions.append((current_state_id, symbol, new_states[next_set]))
-                if next_set & set(automate["finalStates"]):
+                if set(next_set) & set(automate["finalStates"]):
                     new_final_states.add(new_states[next_set])
                     print(f"L'état {new_states[next_set]} est final")
+
+
+                """if next_set & set(automate["finalStates"]):
+                    new_final_states.add(new_states[next_set])
+                    print(f"L'état {new_states[next_set]} est final")"""
 
     afd = {
         "numStates": len(new_states),
@@ -120,4 +132,9 @@ def Determinisation (automate):
 
     print("\n Automate déterminisé")
     return afd
+
+
+"""next_set = tuple(sorted(
+                state_to for state_from, sym, state_to in automate["transitions"] if
+                state_from in current_set and sym == symbol))"""
 
