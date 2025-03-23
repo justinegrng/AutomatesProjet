@@ -33,19 +33,20 @@ def main():
     print("Complet ?", isComplete(automate))
 
     automateStand = standardizeAutomate(automate)
-    print("Automate standardisé: ")
+    print("\n\nAutomate standardisé: ")
     displayAutomate(automateStand)
 
-    print("Automate complet")
+    print("\n\nAutomate complet:")
     automateComplet = completeAutomate(automate)
     displayAutomate(automateComplet)
 
-    print("Automate Déterminisé")
+    print("\n\nAutomate Déterministe:")
     afd = Determinisation(automate)
     displayAutomate(afd)
 
-    print("Automate Minimisé")
-    """displayAutomate(afdm)"""
+    print("\n\nAutomate Minimisé:")
+    afdm = Minimisation(afd)
+    displayAutomate(afdm)
 
 if __name__ == "__main__":
     main()
