@@ -66,7 +66,8 @@ def menuChoice(automate):
         displayAutomate(automateComplet)
     elif choice == "7":
         print("Automate Déterminisé")
-        displayAutomate(Determinisation(automate))
+        automateDeterministe = Determinisation(automate)
+        displayAutomate(automateDeterministe)
     elif choice == "8":
         print("Le mot est reconnu ?")
         mot = input("Entrez un mot: ")

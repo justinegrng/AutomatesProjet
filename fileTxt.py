@@ -34,10 +34,15 @@ def displayAutomate(automate):
     alphabet = getAlphabet(automate)
 
     # Trier les états : d'abord initiaux, puis les autres
-    states = list(automate["initialStates"])  # Récupérer les états initiaux
-    for s in range(automate["numStates"]):
-        if s not in automate["initialStates"] :
-            states.append(s) # Ajouter les autres états triés
+    states = list()
+    for transition in automate["transitions"]:
+        if transition[0] not in states :
+            states.append(transition[0]) # Ajouter les autres états triés
+        elif transition[-1] not in states :
+            states.append(transition[-1]) # Ajouter les autres états trié
+
+
+
 
     # Largeur des colonnes
     colWidth = 7
@@ -54,12 +59,11 @@ def displayAutomate(automate):
 
     for state in states:
         # Définir le type d'état (I = initial, O = final, rien sinon)
-        if state in automate["initialStates"]:
+        stateType = " "
+        if state in automate["initialStates"] and "I" not in stateType:
             stateType = "I "
-        if state in automate["finalStates"]:
+        if state in automate["finalStates"] and "O" not in stateType:
             stateType += "O"
-        else:
-            stateType = " "
 
 
         row = "| " + stateType.ljust(3) + "| " + str(state).rjust(stateColWidth - 2) + " |" # Assure alignement correct
@@ -72,7 +76,7 @@ def displayAutomate(automate):
                     nextStates.add(str(transition[2]))
 
             if nextStates:
-                cell = f"{{{','.join(sorted(nextStates))}}}".center(colWidth)
+                cell = f"{','.join(sorted(nextStates))}".center(colWidth)
             else:
                 cell = " - ".center(colWidth)
 
