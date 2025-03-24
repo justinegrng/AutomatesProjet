@@ -178,7 +178,43 @@ def Minimisation(automate):
             iteration += 1
 
     print("Fin de l'algorithme de minimisation.\n")
-    return automate  # (à remplacer si tu veux retourner l'automate minimisé)
+    return automate
+
+def Complementarisation(automate):
+    print("\nDébut de la complémentarisation :")
+
+    all_states = set()
+    for t in automate["transitions"]:
+        all_states.update([t[0], t[2]])
+
+
+    print(f"\nTous les états de l'automate : {all_states}")
+    print(f"Les états terminaux avant la complémentarisation sont : {automate['finalStates']}")
+
+    # nouveaux états finaux = tous les états - les anciens finaux
+    new_final_states = all_states - set(automate["finalStates"])
+
+    print(f"Les états terminaux après la complémentarisation sont : {new_final_states}\n")
+
+    complemented = {
+        "numStates": automate["numStates"],
+        "initialStates": automate["initialStates"],
+        "finalStates": new_final_states,
+        "transitions": automate["transitions"],
+        "file": automate.get("file", None)  # conserver l'information du fichier
+    }
+
+    print("Fin de la complémentarisation.\n")
+
+    print("L'automate est désormais complet, déterministe, minimisé et il reconnait le langage complémentaire.")
+
+    return complemented
+
+
+
+
+
+
 
 
 

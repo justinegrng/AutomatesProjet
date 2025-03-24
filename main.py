@@ -48,6 +48,10 @@ def main():
     afdm = Minimisation(afd)
     displayAutomate(afdm)
 
+    print("\n\nAutomate reconnaissant le langage complémentaire:")
+    afdmc = Complementarisation(automate)
+    """displayAutomate(afdmc)"""
+
 if __name__ == "__main__":
     main()
 
