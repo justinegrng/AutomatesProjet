@@ -101,7 +101,7 @@ def Determinisation(automate):
                 int(stateTo) if isinstance(stateTo, str) and stateTo.isdigit() else stateTo
                 for stateFrom, sym, stateTo in automate["transitions"]
                 if stateFrom in currentSet and sym == symbol
-            })
+            }, key=lambda x: (isinstance(x, str), x))
 
             if nextSet:  # S'il y a un état atteint
                 nextStateStr = formatState(nextSet)  # Format propre
@@ -128,14 +128,8 @@ def Determinisation(automate):
         "transitions": newTransitions
     }
 
-
-    if not isComplete(afd):
-        afdComplet = completeAutomate(afd)  # Complétion de l'automate si nécessaire
-    else:
-        afdComplet = afd
-
     print("\nAutomate déterminisé")
-    return afdComplet
+    return afd
 
 
 def formatState(stateSet):
@@ -143,6 +137,7 @@ def formatState(stateSet):
     if len(stateSet) == 1:
         return str(stateSet[0])  # Affiche sans parenthèses ni virgule si un seul état
     return f"({', '.join(map(str, stateSet))})"  # Affiche avec parenthèses et virgules sinon
+
 
 
 def Minimisation(automate):
