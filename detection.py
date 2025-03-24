@@ -27,6 +27,7 @@ def isDeterministic(automate):
             return True
 
 
+
 # Fonction pour vérifier si l'automate est standard selon la définition donnée
 def isStandard(automate):
     nonStandardReasons = []

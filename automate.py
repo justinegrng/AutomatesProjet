@@ -76,58 +76,73 @@ def completeAutomate(automate):
 
 
 def Determinisation(automate):
-    # Permet de déterminiser un automate sans renommer les états
-
     initialStates = automate["initialStates"]
-
-    new_states = {}
-    new_transitions = []
-    queue = [tuple(sorted(automate["initialStates"]))]
-    new_initial_state = queue[0]
-    new_final_states = set()
-
     alphabet = getAlphabet(automate)
 
-    print("\nDébut de l'algorithme de déterminisation :")
-    print(f"\n\nÉtats initiaux : {queue}")
+    newStates = {}  # Dictionnaire des nouveaux états
+    newTransitions = []  # Liste des nouvelles transitions
+    queue = [tuple(sorted(initialStates))]  # File des états à traiter
+    newFinalStates = set()  # Nouveaux états finaux
+
+    print(f"États initiaux : {formatState(queue[0])}")
 
     while queue:
-        current_set = queue.pop(0)
-        if current_set not in new_states:
-            new_states[current_set] = current_set
+        currentSet = queue.pop(0)  # Récupère l'ensemble d'états en cours
+        currentStateStr = formatState(currentSet)  # Format propre
 
-        print(f"\n Traitement de l'ensemble d'états {current_set}")
+        if currentStateStr not in newStates:
+            newStates[currentStateStr] = len(newStates)
+
+        print(f"\nTraitement de l'ensemble d'états {currentStateStr}")
 
         for symbol in alphabet:
-            next_set = tuple(sorted([
-                int(state_to) if isinstance(state_to, str) and state_to.isdigit() else state_to
-                for state_from, sym, state_to in automate["transitions"]
-                if state_from in current_set and sym == symbol
-            ], key=lambda x: str(x)))
+            # Calcul des états atteints avec 'symbol'
+            nextSet = sorted({
+                int(stateTo) if isinstance(stateTo, str) and stateTo.isdigit() else stateTo
+                for stateFrom, sym, stateTo in automate["transitions"]
+                if stateFrom in currentSet and sym == symbol
+            })
 
-            print(f"- Transition avec '{symbol}' mène à {next_set}")
-            if next_set:
-                if next_set not in new_states:
-                    new_states[next_set] = next_set
-                    queue.append(next_set)
-                    print(f"Ajout d'un nouvel état : {next_set}")
-                new_transitions.append((current_set, symbol, next_set))
-                if set(next_set) & set(automate["finalStates"]):
-                    new_final_states.add(next_set)
-                    print(f"L'état {next_set} est final")
+            if nextSet:  # S'il y a un état atteint
+                nextStateStr = formatState(nextSet)  # Format propre
 
+                print(f"- Transition avec '{symbol}' mène à {nextStateStr}")
+
+                if nextStateStr not in newStates:
+                    newStates[nextStateStr] = len(newStates)
+                    queue.append(tuple(nextSet))  # Ajout à la file d'attente
+                    print(f"Ajout d'un nouvel état : {nextStateStr}")
+
+                newTransitions.append((currentStateStr, symbol, nextStateStr))
+
+                # Vérifie si cet état doit être final
+                if set(nextSet) & set(automate["finalStates"]):
+                    newFinalStates.add(nextStateStr)
+                    print(f"L'état {nextStateStr} est final")
+
+    # Création de l'automate déterminisé
     afd = {
-        "numStates": len(new_states),
-        "initialStates": {new_initial_state},
-        "finalStates": new_final_states,
-        "transitions": new_transitions
+        "numStates": len(newStates),
+        "initialStates": [formatState(initialStates)],
+        "finalStates": list(newFinalStates),
+        "transitions": newTransitions
     }
 
-    print("\nFin de l'algorithme de déterminisation")
-    print("\n Automate déterminisé")
-    return afd
+
+    if not isComplete(afd):
+        afdComplet = completeAutomate(afd)  # Complétion de l'automate si nécessaire
+    else:
+        afdComplet = afd
+
+    print("\nAutomate déterminisé")
+    return afdComplet
 
 
+def formatState(stateSet):
+    """ Formate un ensemble d'états correctement """
+    if len(stateSet) == 1:
+        return str(stateSet[0])  # Affiche sans parenthèses ni virgule si un seul état
+    return f"({', '.join(map(str, stateSet))})"  # Affiche avec parenthèses et virgules sinon
 
 
 def Minimisation(automate):

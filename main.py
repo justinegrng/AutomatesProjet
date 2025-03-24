@@ -8,20 +8,15 @@ def chooseAutomat():
     if not files:
         print("Pas de fichier trouvé.")
         return None
-
-    while True:
-        choice = input("Quel automate vous intéresse ? (number): ")
-        if choice.isdigit() and 1 <= int(choice) <= len(files):
-            return os.path.join(directory, files[int(choice) - 1])
-        print("Choix invalide.")
+    else :
+        choice = input("Quel automate vous intéresse ?")
+        return os.path.join(directory, "automate%d.txt" % int(choice))
 
 
 def main():
-    # automatonFile = chooseAutomat()
-    # Exemple d'utilisation
+    automatonFile = chooseAutomat()
     directory = "automates"
-    filename = os.path.join(directory, "automate5.txt")
-    automate = readAutomateFromFile(filename)
+    automate = readAutomateFromFile(automatonFile)
     # Obtenir l'alphabet de l'automate
     alphabet = getAlphabet(automate)
     while True:
@@ -29,8 +24,7 @@ def main():
         menuChoice(automate)
         choice = input("Voulez-vous continuer ? ")
         if choice.lower() == "oui":
-            printMenu()
-            menuChoice(automate)
+            True
         else:
             print("Au revoir")
             exit(0)
@@ -46,6 +40,7 @@ def printMenu():
     print("7. Déterminiser l'automate")
     print("8. Reconnaître un mot")
     print("9. Minimiser l'automate")
+    print("10. Changer d'automate")
 
 def menuChoice(automate):
     choice = input("Choisissez une option: ")
@@ -67,7 +62,8 @@ def menuChoice(automate):
         displayAutomate(automateComplet)
     elif choice == "7":
         print("Automate Déterminisé")
-        displayAutomate(Determinisation(automate))
+        automateDeterminise = Determinisation(automate)
+        displayDeterminisation(automateDeterminise)
     elif choice == "8":
         print("Le mot est reconnu ?")
         mot = input("Entrez un mot: ")
@@ -75,6 +71,11 @@ def menuChoice(automate):
     elif choice == "9":
         print("Automate minimisé")
         displayAutomate(Minimisation(automate))
+    elif choice == "10":
+        automatonFile = chooseAutomat()
+        automate = readAutomateFromFile(automatonFile)
+        menuChoice(automate)
+        print("Automate changé")
     else :
         print("Choix invalide")
 

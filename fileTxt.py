@@ -80,3 +80,58 @@ def displayAutomate(automate):
 
         print(row)
         print("+----+---------+" + "-------+" * len(alphabet))
+
+def displayDeterminisation(automate):
+    alphabet = getAlphabet(automate)
+
+    # Trier les états : d'abord initiaux, puis les autres
+    states = list()
+    for transition in automate["transitions"]:
+        if transition[0] not in states :
+            states.append(transition[0]) # Ajouter les autres états triés
+        elif transition[-1] not in states :
+            states.append(transition[-1]) # Ajouter les autres états trié
+
+
+
+
+    # Largeur des colonnes
+    colWidth = 7
+    stateColWidth = 9
+
+    # En-tête du tableau
+    header = "+----+---------+"
+    for a in alphabet:
+        header += a.center(colWidth) + "|"
+    separator = "+====+=========" + "+=======" * len(alphabet) + "+"
+
+    print(header)
+    print(separator)
+
+    for state in states:
+        # Définir le type d'état (I = initial, O = final, rien sinon)
+        stateType = " "
+        if state in automate["initialStates"] and "I" not in stateType:
+            stateType = "I "
+        if state in automate["finalStates"] and "O" not in stateType:
+            stateType += "O"
+
+
+        row = "| " + stateType.ljust(3) + "| " + str(state).rjust(stateColWidth - 2) + " |" # Assure alignement correct
+
+        for symbol in alphabet:
+            # Récupérer toutes les transitions pour cet état et ce symbole
+            nextStates = set()
+            for transition in automate["transitions"]:
+                if transition[0] == state and transition[1] == symbol:
+                    nextStates.add(str(transition[2]))
+
+            if nextStates:
+                cell = f"{','.join(sorted(nextStates))}".center(colWidth)
+            else:
+                cell = " - ".center(colWidth)
+
+            row += cell + "|"
+
+        print(row)
+        print("+----+---------+" + "-------+" * len(alphabet))
