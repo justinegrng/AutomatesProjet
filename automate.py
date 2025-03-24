@@ -75,36 +75,109 @@ def completeAutomate(automate):
     return automate
 
 
-def Determinisation (automate):
-    alphabet = getAlphabet(automate)
+def Determinisation(automate):
+    # Permet de déterminiser un automate sans renommer les états
+
     initialStates = automate["initialStates"]
-    queue = [frozenset(initialStates)]
-    newinitialStates = queue[0]
-    newStates = [newinitialStates]
-    newFinalStates = []
-    newTransitions = []
+
+    new_states = {}
+    new_transitions = []
+    queue = [tuple(sorted(automate["initialStates"]))]
+    new_initial_state = queue[0]
+    new_final_states = set()
+
+    alphabet = getAlphabet(automate)
+
+    print("\nDébut de l'algorithme de déterminisation :")
+    print(f"\n\nÉtats initiaux : {queue}")
+
     while queue:
-        currentStates = queue.pop(0)
+        current_set = queue.pop(0)
+        if current_set not in new_states:
+            new_states[current_set] = current_set
+
+        print(f"\n Traitement de l'ensemble d'états {current_set}")
+
         for symbol in alphabet:
-            nextStates = set()
-            for state in currentStates:
-                for transition in automate["transitions"]:
-                    if transition[0] == state and transition[1] == symbol:
-                        nextStates.add(transition[2])
-            if nextStates:
-                newTransitions.append((currentStates, symbol, frozenset(nextStates)))
-                if frozenset(nextStates) not in newStates:
-                    queue.append(frozenset(nextStates))
-                    newStates.append(frozenset(nextStates))
-        if currentStates.intersection(automate["finalStates"]):
-            newFinalStates.append(currentStates)
-    return {
-        "alphabetSize": automate["alphabetSize"],
-        "numStates": len(newStates),
-        "initialStates": [newinitialStates],
-        "finalStates": newFinalStates,
-        "transitions": newTransitions
+            next_set = tuple(sorted([
+                int(state_to) if isinstance(state_to, str) and state_to.isdigit() else state_to
+                for state_from, sym, state_to in automate["transitions"]
+                if state_from in current_set and sym == symbol
+            ], key=lambda x: str(x)))
+
+            print(f"- Transition avec '{symbol}' mène à {next_set}")
+            if next_set:
+                if next_set not in new_states:
+                    new_states[next_set] = next_set
+                    queue.append(next_set)
+                    print(f"Ajout d'un nouvel état : {next_set}")
+                new_transitions.append((current_set, symbol, next_set))
+                if set(next_set) & set(automate["finalStates"]):
+                    new_final_states.add(next_set)
+                    print(f"L'état {next_set} est final")
+
+    afd = {
+        "numStates": len(new_states),
+        "initialStates": {new_initial_state},
+        "finalStates": new_final_states,
+        "transitions": new_transitions
     }
 
-def Minimisation():
-    pass
+    print("\nFin de l'algorithme de déterminisation")
+    print("\n Automate déterminisé")
+    return afd
+
+
+
+
+def Minimisation(automate):
+
+    print("Début de l'algorithme de minimisation :\n")
+
+    states = set()
+    for t in automate["transitions"]:
+        states.update([t[0], t[2]])
+
+    final_states = set(tuple(s) if isinstance(s, (list, set)) else (s,) for s in automate["finalStates"])
+    non_final_states = set(states) - final_states
+
+    print(f"Les états terminaux sont : {final_states}")
+    print(f"Les états non terminaux sont : {non_final_states}\n")
+
+    partitions = [final_states, non_final_states]
+    print(f"La partition initiale θ0 est : {partitions}\n")
+
+    alphabet = getAlphabet(automate)
+
+    stable = False
+    iteration = 1
+    while not stable:
+        new_partitions = []
+        print(f"Séparation de la partition précédente :")
+        for group in partitions:
+            subgroup_map = {}
+            for state in group:
+                signature = []
+                for symbol in alphabet:
+                    target = next((t[2] for t in automate["transitions"]
+                                   if t[0] == state and t[1] == symbol), None)
+                    for i, g in enumerate(partitions):
+                        if target in g:
+                            signature.append(i)
+                            break
+                    else:
+                        signature.append(None)
+                signature = tuple(signature)
+                subgroup_map.setdefault(signature, set()).add(state)
+            new_partitions.extend(subgroup_map.values())
+
+        if new_partitions == partitions:
+            print(f"\nLa partition finale est donc θ{iteration} = θf = {new_partitions}\n")
+            stable = True
+        else:
+            print(f"\nNouvelles partitions θ{iteration} : {new_partitions}\n")
+            partitions = new_partitions
+            iteration += 1
+
+    print("Fin de l'algorithme de minimisation.\n")
+    return automate  # (à remplacer si tu veux retourner l'automate minimisé)

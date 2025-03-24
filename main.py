@@ -45,6 +45,7 @@ def printMenu():
     print("6. Compléter l'automate")
     print("7. Déterminiser l'automate")
     print("8. Reconnaître un mot")
+    print("9. Minimiser l'automate")
 
 def menuChoice(automate):
     choice = input("Choisissez une option: ")
@@ -71,6 +72,9 @@ def menuChoice(automate):
         print("Le mot est reconnu ?")
         mot = input("Entrez un mot: ")
         print(recognizeWord(automate, mot))
+    elif choice == "9":
+        print("Automate minimisé")
+        displayAutomate(Minimisation(automate))
     else :
         print("Choix invalide")
 
