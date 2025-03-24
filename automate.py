@@ -2,6 +2,7 @@ from fileTxt import *
 from detection import *
 
 
+'''Fonction pour standardiser l'automate'''
 def standardizeAutomate(automate):
     """ETAT INITIAL NOTER I"""
     if isStandard(automate):
@@ -42,7 +43,7 @@ def standardizeAutomate(automate):
 
     return standardAutomate
 
-# Compléter l'automate avec les transitions manquantes
+'''Fonction pour compléter l'automate'''
 def completeAutomate(automate):
     """ESSAYER ETAT POUBELLE ECRIT p DANS LES ETATS"""
     # Récupère alphabet
@@ -74,7 +75,7 @@ def completeAutomate(automate):
 
     return automate
 
-
+'''Fonction pour déterminiser l'automate'''
 def Determinisation(automate):
     initialStates = automate["initialStates"]
     alphabet = getAlphabet(automate)
@@ -132,6 +133,7 @@ def Determinisation(automate):
     return afd
 
 
+'''Fonction pour formater un ensemble d'états correctement'''
 def formatState(stateSet):
     """ Formate un ensemble d'états correctement """
     if len(stateSet) == 1:
@@ -140,6 +142,7 @@ def formatState(stateSet):
 
 
 
+'''Fonction pour minimiser l'automate'''
 def Minimisation(automate):
 
     print("Début de l'algorithme de minimisation :\n")
@@ -202,6 +205,7 @@ def Minimisation(automate):
 
 
 
+'''Fonction pour complémentariser l'automate'''
 def Complementarisation(automate):
     print("\nDébut de la complémentarisation :")
 

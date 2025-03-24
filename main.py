@@ -2,6 +2,8 @@ from fileTxt import *
 from detection import*
 from automate import *
 import os
+
+'''Fonction pour choisir un automate'''
 def chooseAutomat():
     directory = "automates"
     files = [f for f in os.listdir(directory) if f.endswith(".txt")]
@@ -13,6 +15,7 @@ def chooseAutomat():
         return os.path.join(directory, "automate%d.txt" % int(choice))
 
 
+'''Fonction pour lancer le programme'''
 def main():
     automatonFile = chooseAutomat()
     directory = "automates"
@@ -30,6 +33,7 @@ def main():
             exit(0)
 
 
+'''Fonction pour afficher le menu'''
 def printMenu():
     print ("1. Afficher l'automate")
     print("2. Est ce que l'automate est déterministe ?")
@@ -43,6 +47,7 @@ def printMenu():
     print("10. Faire le complémentaire de l'automate")
     print("11. Changer d'automate")
 
+'''Fonction pour choisir une option'''
 def menuChoice(automate):
     choice = input("Choisissez une option: ")
     if choice == "1":
@@ -77,11 +82,12 @@ def menuChoice(automate):
         displayAutomate(Complementarisation(automate))
     elif choice == "11":
         automatonFile = chooseAutomat()
-        automate = readAutomateFromFile(automatonFile)
-        menuChoice(automate)
+        automateChange = readAutomateFromFile(automatonFile)
+        menuChoice(automateChange)
         print("Automate changé")
     else :
         print("Choix invalide")
+
 
 if __name__ == "__main__":
     main()

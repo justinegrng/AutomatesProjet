@@ -1,4 +1,6 @@
 from fileTxt import*
+
+'''Fonction pour vérifier si l'automate est déterministe'''
 def isDeterministic(automate):
     nonDeterministicReasons = []
     numInitialStates = len(automate["initialStates"])
@@ -28,7 +30,7 @@ def isDeterministic(automate):
 
 
 
-# Fonction pour vérifier si l'automate est standard selon la définition donnée
+'''Fonction pour vérifier si l'automate est standard'''
 def isStandard(automate):
     nonStandardReasons = []
 
@@ -50,6 +52,7 @@ def isStandard(automate):
     return True
 
 
+'''Fonction pour vérifier si l'automate est complet'''
 def isComplete(automate):
     # Récupérer l'alphabet de l'automate
     alphabet = getAlphabet(automate)
@@ -71,6 +74,7 @@ def isComplete(automate):
     # Si toutes les vérifications passent, l'automate est complet
     return True
 
+'''Fonction pour reconnaître un mot'''
 def recognizeWord(automate, word):
     """Vérifie si un mot est reconnu par l'automate (déterministe ou non-déterministe)"""
 

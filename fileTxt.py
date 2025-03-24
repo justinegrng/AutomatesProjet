@@ -1,4 +1,5 @@
-# Fonction pour afficher l'automate sous forme de tableau
+
+'''Fonction pour lire un automate depuis un fichier texte'''
 def readAutomateFromFile(filename):
     with open(filename, 'r') as file:
         lines = [line.strip() for line in file.readlines() if line.strip()]
@@ -23,6 +24,7 @@ def readAutomateFromFile(filename):
     return automate
 
 
+'''Fonction pour obtenir l'alphabet de l'automate'''
 def getAlphabet(automate):
     alphabet = set()
     for transition in automate["transitions"]:
@@ -30,6 +32,7 @@ def getAlphabet(automate):
     return sorted(list(alphabet))  # Trie les symboles
 
 
+'''Fonction pour afficher l'automate sous forme de tableau'''
 def displayAutomate(automate):
     """FAIRE ATTENTION A LA SORTIE ET ENTREE AU MEME ENDROIT, PAS AFFICHER"""
     alphabet = getAlphabet(automate)
@@ -81,6 +84,7 @@ def displayAutomate(automate):
         print(row)
         print("+----+---------+" + "-------+" * len(alphabet))
 
+'''Fonction pour afficher l'automate sous forme de tableau pour la déterminisation'''
 def displayDeterminisation(automate):
     alphabet = getAlphabet(automate)
 
