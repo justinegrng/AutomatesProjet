@@ -40,7 +40,8 @@ def printMenu():
     print("7. Déterminiser l'automate")
     print("8. Reconnaître un mot")
     print("9. Minimiser l'automate")
-    print("10. Changer d'automate")
+    print("10. Faire le complémentaire de l'automate")
+    print("11. Changer d'automate")
 
 def menuChoice(automate):
     choice = input("Choisissez une option: ")
@@ -72,6 +73,9 @@ def menuChoice(automate):
         print("Automate minimisé")
         displayAutomate(Minimisation(automate))
     elif choice == "10":
+        print("Automate complémentaire")
+        displayAutomate(Complementarisation(automate))
+    elif choice == "11":
         automatonFile = chooseAutomat()
         automate = readAutomateFromFile(automatonFile)
         menuChoice(automate)

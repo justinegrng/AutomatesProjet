@@ -190,4 +190,40 @@ def Minimisation(automate):
             iteration += 1
 
     print("Fin de l'algorithme de minimisation.\n")
-    return automate  # (à remplacer si tu veux retourner l'automate minimisé)
+
+    # Création de l'automate minimal
+    minimal = {
+        "numStates": len(partitions),
+        "initialStates": [i for i, p in enumerate(partitions) if automate["initialStates"][0] in p],
+        "finalStates": [i for i, p in enumerate(partitions) if p & final_states],
+        "transitions": []
+    }
+    return minimal
+
+
+
+def Complementarisation(automate):
+    print("\nDébut de la complémentarisation :")
+
+    all_states = set()
+    for t in automate["transitions"]:
+        all_states.update([t[0], t[2]])
+
+
+    print(f"\nTous les états de l'automate : {all_states}")
+    print(f"Les états terminaux avant la complémentarisation sont : {automate['finalStates']}")
+
+    new_final_states = all_states - set(automate["finalStates"])
+
+    print(f"Les états terminaux après la complémentarisation sont : {new_final_states}\n")
+
+    complemented = {
+        "numStates": automate["numStates"],
+        "initialStates": automate["initialStates"],
+        "finalStates": new_final_states,
+        "transitions": automate["transitions"],
+        "file": automate.get("file", None)
+    }
+
+    print("Fin de la complémentarisation.\n")
+    return complemented
